@@ -21,7 +21,7 @@
       meta = with pkgs.lib; {
         description = "CLI for music downloading and playback";
         license = licenses.mit;
-        platforms = pkgs.platforms.unix;
+        #platforms = pkgs.platforms.unix;
       };
     };
   };
