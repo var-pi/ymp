@@ -6,7 +6,7 @@
   outputs = { nixpkgs, ... }: let
     pkgs = import nixpkgs { system = "aarch64-darwin"; };
   in {
-    packages.x86_64-darwin.music-cli = pkgs.stdenv.mkDerivation {
+    packages.aarch64-darwin.default = pkgs.stdenv.mkDerivation {
       pname = "music-cli";
       version = "0.1";
 
