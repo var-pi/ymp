@@ -8,8 +8,7 @@ import typer
 
 app = typer.Typer()
 
-@app.command()
-def play(loop: bool = False):
+def _play_song(loop: bool):
     library_dir = Path.home() / ".ymp-store" / "library"
 
     if not library_dir.exists():
@@ -50,10 +49,64 @@ def play(loop: bool = False):
     subprocess.run([
         "ffplay",
         "-nodisp",
+        "-autoexit",
         "-loop",
         f"{0 if loop else 1}",
         str(song_path),
-    ])
+    ])  
+
+def _play_playlist(loop: bool):
+    playlist_dir = Path.home() / ".ymp-store" / "playlists"
+    library_dir = Path.home() / ".ymp-store" / "library"
+
+    if not playlist_dir.exists():
+        typer.echo(f"No playlists found. Directory does not exist: {playlist_dir}", err=True)
+        raise typer.Exit(1)
+
+    playlists = [f.name for f in playlist_dir.iterdir() if f.is_file()]
+    if not playlists:
+        typer.echo("No playlists found.", err=True)
+        raise typer.Exit(0)
+
+    # Choose playlist via fzf
+    result = subprocess.run(
+        ["fzf"],
+        input="\n".join(playlists),
+        text=True,
+        capture_output=True
+    )
+    if result.returncode != 0:
+        # User cancelled selection
+        raise typer.Exit(0)
+
+    selected_playlist = result.stdout.strip()
+    playlist_file = playlist_dir / selected_playlist
+
+    # Read songs from the playlist
+    songs = [line.strip() for line in playlist_file.read_text().splitlines() if line.strip()]
+    if not songs:
+        typer.echo("Playlist is empty.", err=True)
+        raise typer.Exit(0)
+
+    # Play songs in order, loop if requested
+    while True:
+        for song_name in songs:
+            song_path = library_dir / song_name
+            if song_path.exists():
+                subprocess.run([
+                    "ffplay",
+                    "-nodisp",
+                    "-autoexit",
+                    str(song_path)
+                ])
+            else:
+                typer.echo(f"Song not found: {song_name}", err=True)
+        if not loop:
+            break
+
+@app.command()
+def play(loop: bool = False, playlist: bool = False):
+    _play_playlist(loop) if playlist else _play_song(loop)
 
 @app.command()
 def download(url: str):
