@@ -6,7 +6,7 @@
 [x] Download audio from YouTube (single videos) into a local library
 [x] Interactive selection of tracks via `fzf`
 [x] Playback via `ffplay`
-[ ] Play on a loop
+[x] Play on a loop
 [ ] Create playlists
 [ ] Listen to playlists
 

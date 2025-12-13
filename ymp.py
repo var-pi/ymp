@@ -9,7 +9,7 @@ import typer
 app = typer.Typer()
 
 @app.command()
-def play():
+def play(loop: bool = False):
     library_dir = Path.home() / ".ymp-store" / "library"
 
     if not library_dir.exists():
@@ -47,7 +47,13 @@ def play():
         return
 
     # Play the selected file with ffplay
-    subprocess.run(["ffplay", "-nodisp", str(song_path)])
+    subprocess.run([
+        "ffplay",
+        "-nodisp",
+        "-loop",
+        f"{0 if loop else 1}",
+        str(song_path),
+    ])
 
 @app.command()
 def download(url: str):
