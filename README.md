@@ -34,21 +34,39 @@ Ensure the following are available in `PATH`:
 Then:
 ```
 chmod +x ymp.py
-./ymp.py play
-./ymp.py download <URL>
+```
+
+Now you can use the binary as follows:
+```
+
+./ymp.py <command> [OPTIONS] [ARGS]
 ```
 
 ### Option 2: Using Nix (flake)
-Build and run:
+
+Build the package:
 ```
 nix build
-./result/bin/ymp play
 ```
 
-Or enter a development shell:
+This produces an executable:
+```
+./result/bin/ymp
+```
+
+You can then run any subcommand, for example:
+```
+./result/bin/ymp <command> [OPTIONS] [ARGS]
+```
+
+Alternatively, enter a development shell:
 ```
 nix develop
-ymp play
+```
+
+Inside the shell, `ymp` is available in `PATH`:
+```
+ymp <command> [OPTIONS] [ARGS]
 ```
 
 The Nix setup wraps the script and provides all runtime dependencies.
