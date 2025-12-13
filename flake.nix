@@ -18,16 +18,16 @@
 
                     pyproject = true;
                     build-system = [ pkgs.python3Packages.setuptools ];
-                    propagatedBuildInputs = [ pkgs.python3Packages.typer ];
+                    propagatedBuildInputs = [ 
+                        pkgs.python3Packages.typer
+                        pkgs.fzf
+                        pkgs.ffmpeg
+                        pkgs.yt-dlp
+                    ];
 
-                    postInstall = ''
-                        wrapProgram $out/bin/ymp \
-                          --prefix PATH : ${pkgs.lib.makeBinPath [
-                            pkgs.fzf
-                            pkgs.ffmpeg
-                            pkgs.yt-dlp
-                        ]}
-                    '';
+                    extraWrapperArgs = [
+                        "--prefix" "PATH" ":" "${pkgs.lib.makeBinPath [ pkgs.fzf pkgs.ffmpeg pkgs.yt-dlp ]}"
+                    ];
                 };
         };
 }
