@@ -38,7 +38,6 @@ chmod +x ymp.py
 
 Now you can use the binary as follows:
 ```
-
 ./ymp.py <command> [OPTIONS] [ARGS]
 ```
 
