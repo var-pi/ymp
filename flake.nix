@@ -7,34 +7,22 @@
 
     outputs = { self, nixpkgs }:
         let
-            system = "aarch64-darwin"; # change if needed
+            system = "aarch64-darwin";
             pkgs = import nixpkgs { inherit system; };
-            pythonEnv = pkgs.python3.withPackages (ps: with ps; [ typer pip ]);
         in {
             packages.${system}.default =
-                pkgs.stdenv.mkDerivation {
+                pkgs.python3Packages.buildPythonApplication {
                     pname = "ymp";
                     version = "0.1";
-
                     src = ./.;
 
-                    nativeBuildInputs = [ pkgs.makeWrapper ];
+                    pyproject = true;
+                    build-system = [ pkgs.python3Packages.setuptools ];
+                    propagatedBuildInputs = [ pkgs.python3Packages.typer ];
 
-                    buildInputs = [
-                        pythonEnv
-                        pkgs.fzf
-                        pkgs.ffmpeg
-                        pkgs.yt-dlp
-                    ];
-
-                    installPhase = ''
-                    mkdir -p $out/bin
-                    cp $src/ymp.py $out/bin/ymp
-                    chmod +x $out/bin/ymp
-
-                    wrapProgram $out/bin/ymp \
-                        --prefix PATH : ${pkgs.lib.makeBinPath [
-                            pythonEnv
+                    postInstall = ''
+                        wrapProgram $out/bin/ymp \
+                          --prefix PATH : ${pkgs.lib.makeBinPath [
                             pkgs.fzf
                             pkgs.ffmpeg
                             pkgs.yt-dlp

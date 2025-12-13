@@ -2,7 +2,7 @@ import subprocess
 import typer
 from pathlib import Path
 
-def _fzf_select(items: list[str]) -> str | None:
+def fzf_select(items: list[str]) -> str | None:
     """Show a list in fzf and return the selected item, or None if cancelled."""
     if not items:
         return None
@@ -11,7 +11,7 @@ def _fzf_select(items: list[str]) -> str | None:
         return None
     return result.stdout.strip()
 
-def _play_file(path: Path, loop: bool = False):
+def play_file(path: Path, loop: bool = False):
     if path.exists():
         subprocess.run(["ffplay", "-nodisp", "-autoexit", "-loop", f"{0 if loop else 1}", str(path)])
     else:
