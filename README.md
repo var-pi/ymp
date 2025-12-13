@@ -19,7 +19,6 @@ Music is stored in:
 ## Usage
 ```
 ymp <command> [OPTIONS] [ARGS]
-ymp download <URL>
 ```
 
 ## Installation
