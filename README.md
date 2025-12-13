@@ -3,10 +3,13 @@
 `ymp` (YouTube Music Player) is a small command-line tool for downloading and playing music from the terminal using `yt-dlp`, `fzf`, and `ffmpeg`, with a simple Typer-based interface.
 
 ## Features
-- Download audio from YouTube (single videos) into a local library
-- Interactive selection of tracks via `fzf`
-- Playback via `ffplay`
-- Zero configuration beyond a local library directory
+[x] Download audio from YouTube (single videos) into a local library
+[x] Interactive selection of tracks via `fzf`
+[x] Playback via `ffplay`
+[ ] Play on a loop
+[ ] Create playlists
+[ ] Listen to playlists
+
 
 ## Library Location
 Music is stored in:
