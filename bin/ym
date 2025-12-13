@@ -1,5 +1,48 @@
-#! /run/current-system/sw/bin/zsh
+#!/usr/bin/env python3
 
-song_title=$(ls $HOME/.ymp-store/library | fzf)
-song_path="$HOME/.ymp-store/library/$song_title"
-ffplay -nodisp $song_path
+import os
+import subprocess
+from pathlib import Path
+
+def main():
+    library_dir = Path.home() / ".ymp-store" / "library"
+    
+    if not library_dir.exists():
+        print(f"Library directory does not exist: {library_dir}")
+        return
+    
+    # Get list of files in the library directory
+    try:
+        files = [f.name for f in library_dir.iterdir() if f.is_file()]
+    except PermissionError:
+        print(f"Permission denied accessing: {library_dir}")
+        return
+    
+    if not files:
+        print("No files found in the library directory.")
+        return
+    
+    # Use fzf to select a file
+    result = subprocess.run(
+        ["fzf"],
+        input="\n".join(files),
+        text=True,
+        capture_output=True
+    )
+    
+    if result.returncode != 0:
+        # User cancelled selection
+        return
+    
+    selected_file = result.stdout.strip()
+    song_path = library_dir / selected_file
+    
+    if not song_path.exists():
+        print(f"Selected file does not exist: {song_path}")
+        return
+    
+    # Play the selected file with ffplay
+    subprocess.run(["ffplay", "-nodisp", str(song_path)])
+
+if __name__ == "__main__":
+    main()
