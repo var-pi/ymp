@@ -18,7 +18,7 @@ Music is stored in:
 
 ## Usage
 ```
-ymp play
+ymp <command> [OPTIONS] [ARGS]
 ymp download <URL>
 ```
 
@@ -36,9 +36,9 @@ Then:
 chmod +x ymp.py
 ```
 
-Now you can use the binary as follows:
+Now the binnary is accessible as follows:
 ```
-./ymp.py <command> [OPTIONS] [ARGS]
+./ymp.py
 ```
 
 ### Option 2: Using Nix (flake)
@@ -53,9 +53,9 @@ This produces an executable:
 ./result/bin/ymp
 ```
 
-You can then run any subcommand, for example:
+The binary will be in the `result` direectory: 
 ```
-./result/bin/ymp <command> [OPTIONS] [ARGS]
+./result/bin/ymp
 ```
 
 Alternatively, enter a development shell:
@@ -63,9 +63,9 @@ Alternatively, enter a development shell:
 nix develop
 ```
 
-Inside the shell, `ymp` is available in `PATH`:
+In the shell, `ymp` is in `PATH` and can be run directly:
 ```
-ymp <command> [OPTIONS] [ARGS]
+ymp
 ```
 
 The Nix setup wraps the script and provides all runtime dependencies.
