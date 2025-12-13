@@ -4,9 +4,10 @@
   inputs.nixpkgs.url = "github:NixOS/nixpkgs";
 
   outputs = { nixpkgs, ... }: let
-    pkgs = import nixpkgs { system = "aarch64-darwin"; };
+    system = "aarch64-darwin"; #Only for Apple Silicon
+    pkgs = import nixpkgs { inherit system; };
   in {
-    packages.aarch64-darwin.default = pkgs.stdenv.mkDerivation {
+    packages.${system}.default = pkgs.stdenv.mkDerivation {
       pname = "music-cli";
       version = "0.1";
 
