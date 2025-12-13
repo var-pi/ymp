@@ -12,7 +12,7 @@
         in {
             packages.${system}.default =
                 pkgs.stdenv.mkDerivation {
-                    pname = "ym";
+                    pname = "ymp";
                     version = "0.1";
 
                     src = ./.;
@@ -20,7 +20,7 @@
                     nativeBuildInputs = [ pkgs.makeWrapper ];
 
                     buildInputs = [
-                        pkgs.python3
+                        (pkgs.python3.withPackages (ps: with ps; [ typer ]))
                         pkgs.fzf
                         pkgs.ffmpeg
                         pkgs.yt-dlp
@@ -28,17 +28,23 @@
 
                     installPhase = ''
                     mkdir -p $out/bin
-                    cp $src/ym.py $out/bin/ym
-                    chmod +x $out/bin/ym
+                    cp $src/ymp.py $out/bin/ymp
+                    chmod +x $out/bin/ymp
 
-                     wrapProgram $out/bin/ym \
+                     wrapProgram $out/bin/ymp \
                           --prefix PATH : ${pkgs.lib.makeBinPath [
-                            pkgs.python3
                             pkgs.fzf
                             pkgs.ffmpeg
                             pkgs.yt-dlp
                         ]}
                     '';
                 };
+
+            devShells.${system}.default = pkgs.mkShell {
+                packages = [
+                    # Your runtime dependencies
+                    self.packages.${system}.default  # include your wrapped script itself
+                ];
+            };
         };
 }
