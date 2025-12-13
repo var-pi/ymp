@@ -8,7 +8,7 @@
 - [x] Playback via `ffplay`
 - [x] Play on a loop
 - [ ] Create playlists
-- [ ] Listen to playlists
+- [x] Listen to playlists
 
 ## Library Location
 Music is stored in:
