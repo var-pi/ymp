@@ -1,4 +1,5 @@
 import subprocess
+import os
 import typer
 from pathlib import Path
 
@@ -29,3 +30,17 @@ def lines(file: Path) -> list[str]:
         typer.echo("File is empty.", err=True)
         raise typer.Exit(0)
     return lines
+
+def remove(path: Path) -> None:
+    try:
+        os.remove(path)
+        typer.echo(f"Deleted: {path}")
+    except FileNotFoundError:
+        typer.echo(f"File not found: {path}", err=True)
+        raise typer.Exit(code=1)
+    except PermissionError:
+        typer.echo(f"Permission denied: {path}", err=True)
+        raise typer.Exit(code=1)
+    except OSError as exc:
+        typer.echo(f"Error deleting file: {exc}", err=True)
+        raise typer.Exit(code=1)
