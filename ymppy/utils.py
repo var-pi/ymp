@@ -3,7 +3,7 @@ import os
 import typer
 from pathlib import Path
 
-def fzf_select(items: list[str]) -> str | None:
+def fzf(items: list[str]) -> str | None:
     """Show a list in fzf and return the selected item, or None if cancelled."""
     if not items:
         return None
@@ -15,23 +15,23 @@ def fzf_select(items: list[str]) -> str | None:
         raise typer.Exit(0)
     return result_text
 
-def play_file(path: Path, loop: bool = False):
+def play(path: Path, loop: bool = False):
     if path.exists():
         subprocess.run(["ffplay", "-nodisp", "-autoexit", "-loop", f"{0 if loop else 1}", str(path)])
     else:
         typer.echo(f"File not found: {path}", err=True)
 
-def files(dir: Path) -> list[str]:
+def ls(dir: Path) -> list[str]:
     return [f.name for f in dir.iterdir() if f.is_file()] if dir.exists() else []
 
-def lines(file: Path) -> list[str]:
+def cat(file: Path) -> list[str]:
     lines = [line.strip() for line in file.read_text().splitlines() if line.strip()]
     if not lines:
         typer.echo("File is empty.", err=True)
         raise typer.Exit(0)
     return lines
 
-def remove(path: Path) -> None:
+def rm(path: Path) -> None:
     try:
         os.remove(path)
         typer.echo(f"Deleted: {path}")

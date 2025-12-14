@@ -1,13 +1,10 @@
 import typer
-from ymppy.utils import fzf_select, files, play_file, lines
+from ymppy.utils import fzf, ls, cat, play as _play
 from ymppy.paths import playlist_dir, library_dir
 
 def play(loop: bool = False):
     """Play a playlist."""
-    selected = fzf_select(files(playlist_dir))
-    songs = lines(playlist_dir / selected)
-    while True:
+    songs = cat(playlist_dir / fzf(ls(playlist_dir)))
+    while loop:
         for song in songs:
-            play_file(library_dir / song)
-        if not loop:
-            break
+            _play(library_dir / song)
