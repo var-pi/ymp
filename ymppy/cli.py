@@ -2,12 +2,11 @@
 
 import sys
 import typer
-from ymppy.commands.play import play
-from ymppy.commands.download import download
+from ymppy.commands import song, playlist
 
 app = typer.Typer()
-app.command()(play)
-app.command()(download)
+app.add_typer(song.app, name="song")
+app.add_typer(playlist.app, name="playlist")
 
 if __name__ == "__main__":
     app()
