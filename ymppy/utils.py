@@ -3,11 +3,20 @@ import os
 import typer
 from pathlib import Path
 
-def fzf(items: list[str]) -> str | None:
+def fzf(items: list[str], start_at: int = 1) -> str | None:
     """Show a list in fzf and return the selected item, or None if cancelled."""
     if not items:
         return None
-    result = subprocess.run(["fzf"], input="\n".join(items), text=True, capture_output=True)
+    args = [
+        "fzf",
+        "--with-nth", f"{start_at}.."
+    ] 
+    result = subprocess.run(
+        args,
+        input="\n".join(items),
+        text=True,
+        capture_output=True
+    )
     if result.returncode != 0:
         return None
     result_text = result.stdout.strip()

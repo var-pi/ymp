@@ -20,11 +20,11 @@ def add(query: str):
         text=True,
     )
 
-    result = fzf(result.stdout.splitlines())
+    result = fzf(result.stdout.splitlines(), start_at=2)
     if not result:
         typer.echo("Selection failed.", err=True)
         raise typer.Exit(1)
-    id, _ = result.split(" ", 1)
+    id = result.split(" ", 1)[0]
 
     url = f"https://www.youtube.com/watch?v={id}"
     library_dir.mkdir(parents=True, exist_ok=True)
@@ -36,4 +36,3 @@ def add(query: str):
         "--audio-format", "opus",
         url
     ])
-
