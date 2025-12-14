@@ -84,3 +84,7 @@ def mkdirp(dir: Path) -> Path:
     """
     dir.mkdir(parents=True, exist_ok=True)
     return dir
+
+def touch(path: Path) -> Path:
+    path.touch(exist_ok=True)
+    return path
