@@ -88,3 +88,15 @@ def mkdirp(dir: Path) -> Path:
 def touch(path: Path) -> Path:
     path.touch(exist_ok=True)
     return path
+
+def prompt(message: str) -> str:
+    """
+    Minimal wrapper around ``input`` that writes *message* to stdout
+    without adding an extra newline (like the built‑in ``input`` does).
+
+    Returns the raw string entered by the user (including any leading
+    or trailing whitespace – callers can ``strip()`` if they wish).
+    """
+    # ``print`` with ``end=''`` keeps the cursor on the same line.
+    print(message, end="", flush=True)
+    return input()
