@@ -1,8 +1,6 @@
 from ymppy.utils import prompt, touch
 from ymppy.paths import playlist_dir
 
-title: str
-
 def new() -> None:
     """
     Prompt the user for a new playlist name and create an empty file
