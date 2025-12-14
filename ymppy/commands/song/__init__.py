@@ -1,9 +1,9 @@
 import typer
 from .play import play
-from .add import add
+from .new import new
 from .delete import delete
 
 app = typer.Typer()
 app.command()(play)
-app.command()(add)
+app.command()(new)
 app.command()(delete)

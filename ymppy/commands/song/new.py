@@ -6,7 +6,7 @@ from ymppy.paths import library_dir
 from ymppy.utils import pick, yt_dlp, mkdirp
 from ymppy.constants import MAX_RESULTS
 
-def add(query: str) -> None:
+def new(query: str) -> None:
     """Search YouTube, let the user pick a video, and download its audio as Opus."""
     proc = yt_dlp([
         f"ytsearch{MAX_RESULTS}:{query}",
