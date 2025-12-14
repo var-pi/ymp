@@ -1,4 +1,3 @@
-import sys
 import typer
 from ymppy.commands import song, playlist
 

@@ -8,4 +8,4 @@ version = "0.1"
 dependencies = ["typer"]
 
 [project.scripts]
-ymp = "ymppy.cli:app"
+ymp = "ymppy:app"
