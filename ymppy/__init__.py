@@ -1,1 +1,1 @@
-from ymppy.commands import app
+from .commands import app

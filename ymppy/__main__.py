@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from ymppy import app
+from . import app
 
 def main() -> None:
     app()

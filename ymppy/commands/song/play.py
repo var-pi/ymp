@@ -1,4 +1,5 @@
 import typer
+import sys
 from ymppy.paths import base_dir, library_dir, playlist_dir
 from ymppy.utils import play_file, fzf_select, files
 

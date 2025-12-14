@@ -1,5 +1,5 @@
 import typer
-from ymppy.commands import song, playlist
+from . import song, playlist
 
 app = typer.Typer()
 app.add_typer(song.app, name="song")
