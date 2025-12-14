@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 
-import sys
-import typer
-from ymppy.commands import song, playlist
+from ymppy import app
 
-app = typer.Typer()
-app.add_typer(song.app, name="song")
-app.add_typer(playlist.app, name="playlist")
+def main() -> None:
+    app()
 
 if __name__ == "__main__":
-    app()
+    main()
