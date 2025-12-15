@@ -31,11 +31,21 @@ def _fzf(items: list[str], with_nth: str) -> str:
     return result_text
 
 def play(path: Path, loop: bool = False) -> None:
-    if path.exists():
-        subprocess.run(["ffplay", "-nodisp", "-autoexit", "-loop", f"{0 if loop else 1}", str(path)])
-    else:
+    if not path.exists():
         typer.echo(f"File not found: {path}", err=True)
         raise typer.Exit(1)
+    proc = subprocess.Popen([
+        "ffplay",
+        "-nodisp",
+        "-autoexit",
+        "-loglevel", "quiet",
+        "-loop", f"{0 if loop else 1}", str(path)])
+    try:
+        proc.wait()
+    except KeyboardInterrupt:
+        proc.terminate()
+        proc.wait()
+        print("\nPlayback interrupted.")
 
 def ls(dir: Path) -> list[str]:
     return [f.name for f in dir.iterdir() if f.is_file()] if dir.exists() else []
@@ -72,7 +82,7 @@ def yt_dlp(args: list[str], logs: bool = False) -> subprocess.CompletedProcess:
     )
 
     output: list[str] = []
-    
+
     assert proc.stdout is not None
     for line in proc.stdout:
         if logs:
