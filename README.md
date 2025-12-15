@@ -14,6 +14,8 @@
 - [x] Prune playlist from tracks with `fzf`.
 - [x] Choose a playlist with `fzf` and play with `ffmpeg`.
 - [x] Optional looping of song and playlist playback via `--loop` flag.
+- [ ] Only non-included tracks are appendable to a playlist.
+- [ ] Use `ymp` environment instead of typing it every time.
 
 ## Library Location
 Music is stored in:
