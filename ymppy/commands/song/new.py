@@ -12,19 +12,17 @@ def new() -> None:
     proc = yt_dlp([
         f"ytsearch{MAX_RESULTS}:{query}",
         "--flat-playlist",
-        "--print", f"%(id)s{DELIM}%(title)s",
+        "--print", f"%(id)s{DELIM}%(duration>%H:%M:%S)s\t%(title)s",
     ])
 
     # with_nth="2.." to not show video id in picker
-    _id, title = pick(proc.stdout.splitlines(), with_nth="2..").split(DELIM, 1)
+    _id = pick(proc.stdout.splitlines(), with_nth="2..").split(DELIM, 1)[0]
     url = f"https://www.youtube.com/watch?v={_id}"
     output_path = mkdirp(library_dir) / f"%(id)s{DELIM}%(title)s{DELIM}%(ext)s"
-    yt_dlp([
+    proc = yt_dlp([
         "-x",
         "--no-playlist",
         "-o", str(output_path),
         "--audio-format", "opus",
         url
     ], True)
-
-    typer.echo(f"\"{title}\" has been downloaded.")
