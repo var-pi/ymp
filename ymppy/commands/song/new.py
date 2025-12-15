@@ -25,6 +25,6 @@ def new() -> None:
         "-o", str(output_path),
         "--audio-format", "opus",
         url
-    ])
+    ], True)
 
     typer.echo(f"\"{title}\" has been downloaded.")

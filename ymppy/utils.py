@@ -1,5 +1,6 @@
 import subprocess
 import os
+import sys
 from pathlib import Path
 from ymppy.constants import DELIM
 
@@ -60,20 +61,37 @@ def rm(path: Path) -> None:
         typer.echo(f"Error deleting file: {exc}", err=True)
         raise typer.Exit(code=1)
 
-def yt_dlp(args: list[str]) -> subprocess.CompletedProcess:
+def yt_dlp(args: list[str], logs: bool = False) -> subprocess.CompletedProcess:
     """Execute yt‑dlp with the given arguments, raising on failure."""
-    proc = subprocess.run(
+    proc = subprocess.Popen(
         ["yt-dlp", *args],
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        bufsize=1,
         text=True,
     )
 
-    if proc.returncode != 0:
-        typer.echo(f"yt-dlp search failed: {proc.stderr}", err=True)
+    output: list[str] = []
+    
+    assert proc.stdout is not None
+    for line in proc.stdout:
+        if logs:
+            sys.stdout.write(line)
+        output.append(line)
+
+    returncode = proc.wait()
+    stdout = "".join(output)
+
+    if returncode != 0:
+        typer.echo(f"yt-dlp failed:\n{stdout}", err=True)
         raise typer.Exit(1)
 
-    return proc
+    return subprocess.CompletedProcess(
+        args=["yt-dlp", *args],
+        returncode=returncode,
+        stdout=stdout,
+        stderr=None,
+    )
 
 def pick(lines: list[str], with_nth: str = "1..") -> str:
     """Delegate to the external fzf UI and return the chosen line."""
