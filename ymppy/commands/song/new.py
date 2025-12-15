@@ -7,8 +7,8 @@ from ymppy.utils import pick, yt_dlp, mkdirp, prompt
 from ymppy.constants import MAX_RESULTS, DELIM
 
 def new() -> None:
-    query = prompt("Query: ")
     """Search YouTube, let the user pick a video, and download its audio as Opus."""
+    query = prompt("Query: ")
     proc = yt_dlp([
         f"ytsearch{MAX_RESULTS}:{query}",
         "--flat-playlist",
