@@ -56,10 +56,5 @@ Rebuild the flake. In the shell, `ymp` is in `PATH` and can be run directly:
 ymp
 ```
 
-## Notes
-- Only single videos are downloaded (`--no-playlist`).
-- Audio is extracted and stored as Opus.
-- Cancelling `fzf` exits cleanly without error.
-
 ## License
 MIT
