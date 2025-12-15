@@ -73,23 +73,32 @@ def rm(path: Path) -> None:
 
 def yt_dlp(args: list[str], logs: bool = False) -> subprocess.CompletedProcess:
     """Execute yt‑dlp with the given arguments, raising on failure."""
-    proc = subprocess.Popen(
-        ["yt-dlp", *args],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        bufsize=1,
-        text=True,
-    )
-
     output: list[str] = []
+    proc = None
 
-    assert proc.stdout is not None
-    for line in proc.stdout:
-        if logs:
-            sys.stdout.write(line)
-        output.append(line)
+    try:
+        proc = subprocess.Popen(
+            ["yt-dlp", *args],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            bufsize=1,
+            text=True,
+        )
 
-    returncode = proc.wait()
+        assert proc.stdout is not None
+        for line in proc.stdout:
+            if logs:
+                sys.stdout.write(line)
+            output.append(line)
+
+        returncode = proc.wait()
+    except:
+        if proc is not None:
+            proc.terminate()
+            proc.wait()
+        print("\nDownload interrupted.")
+        raise typer.Exit(1)
+
     stdout = "".join(output)
 
     if returncode != 0:
