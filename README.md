@@ -3,12 +3,17 @@
 `ymp` (YouTube Music Player) is a small command-line tool for downloading and playing music from the terminal using `yt-dlp`, `fzf`, and `ffmpeg`, with a simple Typer-based interface.
 
 ## Features
-- [x] Download audio from YouTube (single videos) into a local library
-- [x] Interactive selection of tracks via `fzf`
-- [x] Playback via `ffplay`
-- [x] Play on a loop
-- [ ] Create playlists
-- [x] Listen to playlists
+- [x] Zsh autocompletions provided by `typer`.
+- [x] Audio library and playlist folders managed automatically.
+- [x] Download audio with `fzf` and `yt-dlp` (with `ytsearch`).
+- [x] Delete audio with `fzf`.
+- [x] Choose audio track with `fzf` and play with `ffmpeg`.
+- [x] Create playlists with an interactive prompt.
+- [x] Delete playlists with `fzf`.
+- [x] Append tracks to a plylist with `fzf`.
+- [x] Prune playlist from tracks with `fzf`.
+- [x] Choose a playlist with `fzf` and play with `ffmpeg`.
+- [x] Optional looping of song and playlist playback via `--loop` flag.
 
 ## Library Location
 Music is stored in:
@@ -18,56 +23,38 @@ Music is stored in:
 
 ## Usage
 ```
-ymp <command> [OPTIONS] [ARGS]
+ymp <command> [OPTIONS]
 ```
 
 ## Installation
 
-### Option 1: Run directly (no Nix required)
-Ensure the following are available in `PATH`:
-- Python 3
-- `yt-dlp`
-- `ffmpeg` (for `ffplay`)
-- `fzf`
+>  The Nix setup wraps the script and provides all runtime dependencies.
 
-Then:
-```
-chmod +x ymp.py
-```
-
-Now the binnary is accessible as follows:
-```
-./ymp.py
-```
-
-### Option 2: Using Nix (flake)
+### Option 1: Using Nix build (flake)
 
 Build the package:
 ```
 nix build
 ```
-
-This produces an executable:
-```
-./result/bin/ymp
-```
-
 The binary will be in the `result` direectory: 
 ```
 ./result/bin/ymp
 ```
 
-Alternatively, enter a development shell:
-```
-nix develop
-```
+### Option 2: Using Nix flake
 
-In the shell, `ymp` is in `PATH` and can be run directly:
+In the system flake add a link to the project:
+```
+ymp.url = "github:var-pi/ymp";
+```
+Now add the packages to system packages:
+```
+inputs.ymp.packages.${stdenv.hostPlatform.system}.default
+```
+Rebuild the flake. In the shell, `ymp` is in `PATH` and can be run directly:
 ```
 ymp
 ```
-
-The Nix setup wraps the script and provides all runtime dependencies.
 
 ## Notes
 - Only single videos are downloaded (`--no-playlist`).
