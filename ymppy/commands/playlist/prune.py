@@ -9,7 +9,7 @@ def prune() -> None:
     
     playlist_songs = cat(playlist_path)
 
-    song  = pick(playlist_songs)
+    song  = pick(playlist_songs, with_nth="2..-2")
 
     playlist_songs.remove(song)
     save(playlist_path, playlist_songs)
