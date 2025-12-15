@@ -1,1 +1,2 @@
 MAX_RESULTS = 10
+DELIM = "\t"

@@ -10,5 +10,5 @@ def new() -> None:
     title = ""
     while not title:
         title = prompt("New playlist name: ").strip()
-    touch(playlist_dir / f"{title}.m3e")
+    touch(playlist_dir / f"{title}")
     print(f"Playlist \"{title}\" created.")

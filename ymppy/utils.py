@@ -1,26 +1,30 @@
 import subprocess
 import os
 from pathlib import Path
+from ymppy.constants import DELIM
 
 import typer
 
-def _fzf(items: list[str], start_at: int) -> str:
+def _fzf(items: list[str], with_nth: str) -> str:
     """Show a list in fzf and return the selected item, or None if cancelled."""
     if not items:
-        return None
+        typer.echo("No items were provided", err=True)
+        raise typer.Exit(0)
     args = [
         "fzf",
-        "--with-nth", f"{start_at}.."
+        "--delimiter", DELIM,
+        "--with-nth", with_nth,
     ] 
-    result = subprocess.run(
+    proc = subprocess.run(
         args,
         input="\n".join(items),
         text=True,
         capture_output=True
     )
-    if result.returncode != 0:
-        return None
-    result_text = result.stdout.strip()
+    if proc.returncode != 0:
+        typer.echo("Fzf process failed", err=True)
+        raise typer.Exit(1)
+    result_text = proc.stdout.strip()
     if not result_text:
         raise typer.Exit(0)
     return result_text
@@ -71,9 +75,9 @@ def yt_dlp(args: list[str]) -> subprocess.CompletedProcess:
 
     return proc
 
-def pick(lines: list[str], start_at: int = 1) -> str:
+def pick(lines: list[str], with_nth: str = "1..") -> str:
     """Delegate to the external fzf UI and return the chosen line."""
-    return _fzf(lines, start_at=start_at)
+    return _fzf(lines, with_nth)
 
 def mkdirp(dir: Path) -> Path:
     """
@@ -106,3 +110,6 @@ def basename(title: str) -> str:
 
 def save(path: Path, lines: list[str]) -> None:
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+def append(path: Path, line: str):
+    path.open("a", encoding="utf-8").write(line + "\n")

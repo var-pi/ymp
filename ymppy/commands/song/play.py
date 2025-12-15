@@ -3,4 +3,4 @@ from ymppy.utils import pick, ls, play as _play
 
 def play(loop: bool = False):
     """Play a single song."""
-    _play(library_dir / pick(ls(library_dir)), loop=loop) 
+    _play(library_dir / pick(ls(library_dir), with_nth="2..-2"), loop=loop) 
