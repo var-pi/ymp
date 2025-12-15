@@ -100,3 +100,9 @@ def prompt(message: str) -> str:
     # ``print`` with ``end=''`` keeps the cursor on the same line.
     print(message, end="", flush=True)
     return input()
+
+def basename(title: str) -> str:
+    return title.split(".")[0]
+
+def save(path: Path, lines: list[str]) -> None:
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
