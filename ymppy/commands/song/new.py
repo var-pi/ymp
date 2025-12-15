@@ -3,10 +3,11 @@ import subprocess
 
 import typer
 from ymppy.paths import library_dir
-from ymppy.utils import pick, yt_dlp, mkdirp
+from ymppy.utils import pick, yt_dlp, mkdirp, prompt
 from ymppy.constants import MAX_RESULTS
 
-def new(query: str) -> None:
+def new() -> None:
+    query = prompt("Query: ")
     """Search YouTube, let the user pick a video, and download its audio as Opus."""
     proc = yt_dlp([
         f"ytsearch{MAX_RESULTS}:{query}",
