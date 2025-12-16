@@ -15,7 +15,7 @@
 - [x] Prune playlist from tracks with `fzf`.
 - [x] Choose a playlist with `fzf` and play with `ffmpeg`.
 - [x] Optional looping of song and playlist playback via `--loop` flag.
-- [x] Only non-included tracks are appendable to a playlist.
+- [x] Only "non-playlisted" tracks are appendable to a playlist.
 - [x] Use `ymp` shell instead of typing prefix `ymp` every time.
 - [x] Delete a song from playlist before deleting from library.
 
