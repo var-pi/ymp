@@ -9,9 +9,9 @@ def prune() -> None:
     
     playlist_songs = cat(playlist_path)
 
-    song  = pick(playlist_songs, with_nth="2..-2")
+    song_title  = pick(playlist_songs, with_nth="2..-2")
 
-    playlist_songs.remove(song)
+    playlist_songs.remove(song_title)
     save(playlist_path, playlist_songs)
 
-    typer.echo(f"Removed '{basename(song)}' from {basename(playlist_title)}")
+    typer.echo(f"Removed '{basename(song_title)}' from {playlist_title}")

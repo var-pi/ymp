@@ -144,7 +144,7 @@ def prompt(message: str) -> str:
     return input()
 
 def basename(title: str) -> str:
-    return title.split(".")[0]
+    return title.split(".")[1]
 
 def save(path: Path, lines: list[str]) -> None:
     """Overwrite the file."""
