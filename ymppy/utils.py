@@ -54,9 +54,6 @@ def ls(dir: Path) -> list[str]:
 
 def cat(file: Path) -> list[str]:
     lines = [line.strip() for line in file.read_text().splitlines() if line.strip()]
-    if not lines:
-        typer.echo("File is empty.", err=True)
-        raise typer.Exit(0)
     return lines
 
 def rm(path: Path) -> None:

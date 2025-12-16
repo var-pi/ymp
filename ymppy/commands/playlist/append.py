@@ -1,5 +1,5 @@
 import typer
-from ymppy. utils import ls, pick, touch, append as _append, cat
+from ymppy. utils import ls, pick, touch, append as _append, cat, basename
 from ymppy.paths import library_dir, playlist_dir
 
 def append():
@@ -9,8 +9,9 @@ def append():
     """
     playlist_title = pick(ls(playlist_dir))
     playlist_path = playlist_dir / playlist_title
+    typer.echo(cat(playlist_path))
     songs_not_in_playlist = [s for s in ls(library_dir) if s not in cat(playlist_path)]
     song_title = pick(songs_not_in_playlist, with_nth="2..2")
     _append(playlist_path, song_title)
 
-    typer.echo(f"Added '{song_title}' to playlist '{playlist_title}'.")
+    typer.echo(f"Added '{basename(song_title)}' to playlist '{playlist_title}'.")
