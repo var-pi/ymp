@@ -6,6 +6,7 @@ from ymppy.constants import DELIM
 
 import typer
 from ymppy.paths import playlist_dir
+from ymppy.constants import MAX_RESULTS
 
 def _fzf(items: list[str], with_nth: str) -> str:
     """Show a list in fzf and return the selected item, or None if cancelled."""
@@ -161,3 +162,16 @@ def unlink(title: str):
         updated_lines = [line for line in lines if line.strip() != title]
         if len(lines) != len(updated_lines):
             save(playlist_path, updated_lines)
+
+def url():
+    """Query a user and provide an appropriate URL."""
+    query = prompt("Query: ")
+    proc = yt_dlp([
+        f"ytsearch{MAX_RESULTS}:{query}",
+        "--flat-playlist",
+        "--print", f"%(id)s{DELIM}%(duration>%H:%M:%S)s\t%(title)s",
+    ])
+
+    # with_nth="2.." to not show video id in picker
+    _id = pick(proc.stdout.splitlines(), with_nth="2..").split(DELIM, 1)[0]
+    return f"https://www.youtube.com/watch?v={_id}"
