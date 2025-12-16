@@ -5,6 +5,7 @@ from pathlib import Path
 from ymppy.constants import DELIM
 
 import typer
+from ymppy.paths import playlist_dir
 
 def _fzf(items: list[str], with_nth: str) -> str:
     """Show a list in fzf and return the selected item, or None if cancelled."""
@@ -146,7 +147,17 @@ def basename(title: str) -> str:
     return title.split(".")[0]
 
 def save(path: Path, lines: list[str]) -> None:
+    """Overwrite the file."""
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 def append(path: Path, line: str):
     path.open("a", encoding="utf-8").write(line + "\n")
+
+def unlink(title: str):
+    """Remove a song from all the playlists."""
+    for playlist_title in ls(playlist_dir):
+        playlist_path = playlist_dir / playlist_title
+        lines = cat(playlist_path)
+        updated_lines = [line for line in lines if line.strip() != title]
+        if len(lines) != len(updated_lines):
+            save(playlist_path, updated_lines)
