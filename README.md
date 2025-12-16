@@ -17,7 +17,7 @@
 - [x] Optional looping of song and playlist playback via `--loop` flag.
 - [x] Only non-included tracks are appendable to a playlist.
 - [x] Use `ymp` shell instead of typing prefix `ymp` every time.
-- [x] Delete a song from playlist before deleting.
+- [x] Delete a song from playlist before deleting from library.
 
 ## Library Location
 Music is stored in:
