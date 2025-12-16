@@ -8,14 +8,16 @@
 - [x] Download audio with `fzf` and `yt-dlp` (with `ytsearch`).
 - [x] Delete audio with `fzf`.
 - [x] Choose audio track with `fzf` and play with `ffmpeg`.
+- [x] Choose audio track with `fzf` and stream with `ffmpeg`.
 - [x] Create playlists with an interactive prompt.
 - [x] Delete playlists with `fzf`.
 - [x] Append tracks to a plylist with `fzf`.
 - [x] Prune playlist from tracks with `fzf`.
 - [x] Choose a playlist with `fzf` and play with `ffmpeg`.
 - [x] Optional looping of song and playlist playback via `--loop` flag.
-- [ ] Only non-included tracks are appendable to a playlist.
+- [x] Only non-included tracks are appendable to a playlist.
 - [x] Use `ymp` shell instead of typing prefix `ymp` every time.
+- [x] Delete a song from playlist before deleting.
 
 ## Library Location
 Music is stored in:
