@@ -48,6 +48,7 @@ def play(path: Path, loop: bool = False) -> None:
         proc.terminate()
         proc.wait()
         print("\nPlayback interrupted.")
+        raise KeyboardInterrupt
 
 def ls(dir: Path) -> list[str]:
     return [f.name for f in dir.iterdir() if f.is_file()] if dir.exists() else []
