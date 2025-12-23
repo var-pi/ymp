@@ -21,6 +21,8 @@
 - [ ] Pull songs in bulk from a plylist.
 - [ ] Link several songs to a playlist.
 - [ ] Unlink several songs from a playlist.
+- [ ] Better interface.
+- [ ] Quicker song downloading.
 
 ## Library Location
 Music is stored in:
