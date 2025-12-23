@@ -23,6 +23,7 @@
 - [ ] Unlink several songs from a playlist.
 - [ ] Better interface.
 - [ ] Quicker song downloading.
+- [ ] Stop, play, skip, send to background.
 
 ## Library Location
 Music is stored in:
