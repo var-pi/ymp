@@ -18,6 +18,9 @@
 - [x] Only "non-playlisted" tracks are appendable to a playlist.
 - [x] Use `ymp` shell instead of typing prefix `ymp` every time.
 - [x] Delete a song from playlist before deleting from library.
+- [ ] Pull songs in bulk from a plylist.
+- [ ] Link several songs to a playlist.
+- [ ] Unlink several songs from a playlist.
 
 ## Library Location
 Music is stored in:
