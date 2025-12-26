@@ -41,13 +41,13 @@ def play(path: Path, loop: bool) -> None:
         "-nodisp",
         "-autoexit",
         "-loglevel", "quiet",
-        "-loop", f"{0 if loop else 1}", str(path)])
+        "-loop", f"{0 if loop else 1}", str(path)], stdout=subprocess.DEVNULL)
     try:
         proc.wait()
     except KeyboardInterrupt:
         proc.terminate()
         proc.wait()
-        print("\nPlayback interrupted.")
+        typer.echo("\nPlayback interrupted.")
         raise KeyboardInterrupt
 
 def ls(dir: Path) -> list[str]:

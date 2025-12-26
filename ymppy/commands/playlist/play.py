@@ -11,6 +11,6 @@ def play(loop: bool = True, shuffle: bool = True):
         if shuffle:
             random.shuffle(songs)
         for song in songs:
-            _play(library_dir / song, loop)
+            _play(library_dir / song, loop=False)
         if not loop:
             break
