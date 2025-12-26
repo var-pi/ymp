@@ -32,7 +32,7 @@ def _fzf(items: list[str], with_nth: str) -> str:
         raise typer.Exit(0)
     return result_text
 
-def play(path: Path, loop: bool = False) -> None:
+def play(path: Path, loop: bool) -> None:
     if not path.exists():
         typer.echo(f"File not found: {path}", err=True)
         raise typer.Exit(1)

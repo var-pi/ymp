@@ -24,6 +24,7 @@
 - [ ] Better interface.
 - [ ] Quicker song downloading.
 - [ ] Stop, play, skip, send to background.
+- [ ] Shufle mode for playlists.
 
 ## Library Location
 Music is stored in:
