@@ -1,7 +1,7 @@
 import random
 
 import typer
-from ymppy.utils import pick, ls, cat, play as _play
+from ymppy.utils import pick, ls, cat, play as _play, basename
 from ymppy.paths import playlist_dir, library_dir
 
 def play(loop: bool = True, shuffle: bool = True):
@@ -11,6 +11,7 @@ def play(loop: bool = True, shuffle: bool = True):
         if shuffle:
             random.shuffle(songs)
         for song in songs:
+            typer.echo(typer.style(basename(song), fg=typer.colors.GREEN))
             _play(library_dir / song, loop=False)
         if not loop:
             break
